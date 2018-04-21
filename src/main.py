@@ -5,6 +5,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 
+from numpad import Numpad
 from settings import CalculatorSettingsContainer
 
 
@@ -56,6 +57,8 @@ class CalculatorApp(App):
         self.manager = ScreenManager(transition=SlideTransition(
                                      duration=.15))
         self.recognizer = Recognizer()
+        self.recognizer.import_gesture(filename='./calc_symbols.kg')
+
 
         # Gesture screen
         surface = GestureSurface(line_width=2, draw_bbox=True,
@@ -69,7 +72,11 @@ class CalculatorApp(App):
         surface.bind(on_gesture_cleanup=self.handle_gesture_cleanup)
         self.surface = surface
 
-        # Numb Pad screen
+        # NumPad screen
+        numpad = Numpad()
+        numpad_screen = Screen(name='numpad')
+        numpad_screen.add_widget(numpad)
+        self.manager.add_widget(numpad_screen)
 
         # Settings screen
         app_settings = CalculatorAppSettings()
