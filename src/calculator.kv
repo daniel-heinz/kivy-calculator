@@ -1,7 +1,7 @@
 <MainMenu>:
     rows: 2
     size_hint: (1, None)
-    height: 74
+    height: 86
     spacing: 5
     padding: 5
 
@@ -15,7 +15,17 @@
             hint_text: '0'
         Button:
             text: '<x'
-            width: 32
+            width: 64
+            size_hint_x: None
+        Button:
+            text: '[b]AC[/b]'
+            markup: True
+            width: 64
+            size_hint_x: None
+        Button:
+            text: '[b]=[/b]'
+            markup: True
+            width: 64
             size_hint_x: None
 
     BoxLayout:
