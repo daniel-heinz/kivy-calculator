@@ -1,5 +1,7 @@
+from asteval import Interpreter
 from kivy.app import App
 from kivy.multistroke import Recognizer
+from kivy.properties import StringProperty
 from kivy.uix.gesturesurface import GestureSurface
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
@@ -7,6 +9,33 @@ from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 
 from numpad import Numpad
 from settings import CalculatorSettingsContainer
+
+
+class CalcBar(GridLayout):
+    calc_value = StringProperty('15')
+
+    def clear_value(self):
+        self.calc_value = ''
+
+    def del_last(self):
+        self.calc_value = self.calc_value[:-1]
+
+    def exec_calc(self):
+        if len(self.calc_value) != 0:
+            a_eval = Interpreter()
+            res = str(a_eval(self.calc_value))
+
+            if len(a_eval.error) <= 0:
+            #     err = a_eval.error[0].get_error()
+            #     err_box = QMessageBox()
+            #     err_box.setWindowTitle('Evaluation Error')
+            #     err_box.setText('An {0} occurred. Pleas check below for details.'.format(err[0]))
+            #     err_box.setIcon(QMessageBox.Critical)
+            #     err_list = [str(e.get_error()[1]).strip() + '\n' for e in a_eval.error]
+            #     err_box.setDetailedText(' '.join(err_list))
+            #     err_box.show()
+            # else:
+                self.calc_value = res
 
 
 class MainMenu(GridLayout):
@@ -95,6 +124,7 @@ class CalculatorApp(App):
 
         # Wrap in a gridlayout so the main menu is always visible
         layout = GridLayout(cols=1)
+        layout.add_widget(CalcBar())
         layout.add_widget(MainMenu())
         layout.add_widget(self.manager)
         return layout

@@ -1,56 +1,62 @@
 <MainMenu>:
-    rows: 2
+    rows: 1
     size_hint: (1, None)
-    height: 86
+    height: 40
     spacing: 5
     padding: 5
 
-    BoxLayout:
-        orientation: 'horizontal'
-        spacing: 5
+    ToggleButton:
+        group: 'mainmenu'
+        state: 'down'
+        text: 'Gesture Surface'
+        on_press:
+            app.manager.current = 'surface'
+            if self.state == 'normal': self.state = 'down'
+    ToggleButton:
+        group: 'mainmenu'
+        text: 'Numpad'
+        on_press:
+            app.manager.current = 'numpad'
+            if self.state == 'normal': self.state = 'down'
+    ToggleButton:
+        group: 'mainmenu'
+        text: 'Settings'
+        on_press:
+            app.manager.current = 'settings'
+            if self.state == 'normal': self.state = 'down'
 
-        TextInput:
-            multiline: False
-            font_size: 16
-            hint_text: '0'
-        Button:
-            text: '<x'
-            width: 64
-            size_hint_x: None
-        Button:
-            text: '[b]AC[/b]'
-            markup: True
-            width: 64
-            size_hint_x: None
-        Button:
-            text: '[b]=[/b]'
-            markup: True
-            width: 64
-            size_hint_x: None
+<CalcBar>:
+    calc_value: ti_calc.text
+    rows: 1
+    size_hint: (1, None)
+    height: 48
+    spacing: 5
+    padding: 5
 
-    BoxLayout:
-        orientation: 'horizontal'
-        spacing: 5
-
-        ToggleButton:
-            group: 'mainmenu'
-            state: 'down'
-            text: 'Gesture Surface'
-            on_press:
-                app.manager.current = 'surface'
-                if self.state == 'normal': self.state = 'down'
-        ToggleButton:
-            group: 'mainmenu'
-            text: 'Numpad'
-            on_press:
-                app.manager.current = 'numpad'
-                if self.state == 'normal': self.state = 'down'
-        ToggleButton:
-            group: 'mainmenu'
-            text: 'Settings'
-            on_press:
-                app.manager.current = 'settings'
-                if self.state == 'normal': self.state = 'down'
+    TextInput:
+        id: ti_calc
+        multiline: False
+        font_size: 20
+        text: root.calc_value
+        hint_text: '0'
+        padding_y: [self.height / 2.0 - (self.line_height / 2.0) * len(self._lines), 0]
+    Button:
+        text: '<x'
+        width: 64
+        size_hint_x: None
+        on_press: root.del_last()
+    Button:
+        text: '[b]AC[/b]'
+        markup: True
+        width: 64
+        size_hint_x: None
+        on_press: root.clear_value()
+    Button:
+        text: '[b]=[/b]'
+        markup: True
+        width: 64
+        size_hint_x: None
+        on_press: root.exec_calc()
 
 <CalculatorAppSettings>:
     pos_hint: {'top': 1}
