@@ -7,6 +7,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 
+from errorPopup import ErrorPopup
 from numpad import Numpad
 from settings import CalculatorSettingsContainer
 
@@ -25,16 +26,14 @@ class CalcBar(GridLayout):
             a_eval = Interpreter()
             res = str(a_eval(self.calc_value))
 
-            if len(a_eval.error) <= 0:
-            #     err = a_eval.error[0].get_error()
-            #     err_box = QMessageBox()
-            #     err_box.setWindowTitle('Evaluation Error')
-            #     err_box.setText('An {0} occurred. Pleas check below for details.'.format(err[0]))
-            #     err_box.setIcon(QMessageBox.Critical)
-            #     err_list = [str(e.get_error()[1]).strip() + '\n' for e in a_eval.error]
-            #     err_box.setDetailedText(' '.join(err_list))
-            #     err_box.show()
-            # else:
+            if len(a_eval.error) > 0:
+                err = a_eval.error[0].get_error()
+                err_box = ErrorPopup()
+                err_box.set_header('An {0} occurred.\nPleas check below for details.'.format(err[0]))
+                err_list = [str(e.get_error()[1]).strip() + '\n' for e in a_eval.error]
+                err_box.set_message(' '.join(err_list))
+                err_box.open()
+            else:
                 self.calc_value = res
 
 
