@@ -10,7 +10,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 
-Builder.load_file('settings.kv')
+Builder.load_file('../res/kvs/settings.kv')
 
 
 class CalculatorSettingsContainer(GridLayout):

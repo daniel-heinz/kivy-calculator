@@ -1,5 +1,6 @@
 from asteval import Interpreter
 from kivy.app import App
+from kivy.lang import Builder
 from kivy.multistroke import Recognizer
 from kivy.properties import StringProperty
 from kivy.uix.gesturesurface import GestureSurface
@@ -10,6 +11,8 @@ from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 from errorPopup import ErrorPopup
 from numpad import Numpad
 from settings import CalculatorSettingsContainer
+
+Builder.load_file('../res/kvs/calculator.kv')
 
 
 class CalcBar(GridLayout):
@@ -94,7 +97,7 @@ class CalculatorApp(App):
         self.manager = ScreenManager(transition=SlideTransition(
                                      duration=.15))
         self.recognizer = Recognizer()
-        self.recognizer.import_gesture(filename='./calc_symbols.kg')
+        self.recognizer.import_gesture(filename='../res/calc_symbols.kg')
         self.calc_bar = CalcBar()
 
 

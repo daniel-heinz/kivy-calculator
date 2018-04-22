@@ -4,7 +4,7 @@ from kivy.lang import Builder
 from kivy.properties import StringProperty
 from kivy.uix.popup import Popup
 
-Builder.load_file('errorPopup.kv')
+Builder.load_file('../res/kvs/errorPopup.kv')
 
 
 class ErrorPopup(Popup):
