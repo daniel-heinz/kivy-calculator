@@ -21,6 +21,14 @@ class CalcBar(GridLayout):
     def del_last(self):
         self.calc_value = self.calc_value[:-1]
 
+    def update_display(self, symbol):
+        if len(self.calc_value) != 0 and symbol == 'sqrt':
+            self.calc_value = 'sqrt({0})'.format(self.calc_value)
+        elif len(self.calc_value) != 0 and symbol == '()':
+            self.calc_value = '({0})'.format(self.clear_value)
+        else:
+            self.calc_value += symbol
+
     def exec_calc(self):
         if len(self.calc_value) != 0:
             a_eval = Interpreter()
@@ -75,6 +83,7 @@ class CalculatorApp(App):
         else:
             text = 'Name: [b]%s[/b]\nScore: [b]%f[/b]\nDistance: [b]%f[/b]' % (
                    best['name'], best['score'], best['dist'])
+            self.calc.update_display(best['name'])
 
         g = result._gesture_obj
         g._result_label = Label(text=text, markup=True, size_hint=(None, None),
@@ -86,6 +95,7 @@ class CalculatorApp(App):
                                      duration=.15))
         self.recognizer = Recognizer()
         self.recognizer.import_gesture(filename='./calc_symbols.kg')
+        self.calc = CalcBar()
 
 
         # Gesture screen
@@ -123,7 +133,7 @@ class CalculatorApp(App):
 
         # Wrap in a gridlayout so the main menu is always visible
         layout = GridLayout(cols=1)
-        layout.add_widget(CalcBar())
+        layout.add_widget(self.calc)
         layout.add_widget(MainMenu())
         layout.add_widget(self.manager)
         return layout
