@@ -7,4 +7,6 @@ Builder.load_file('numpad.kv')
 
 
 class Numpad(GridLayout):
-    pass
+    def __init__(self, calc_bar, **kwargs):
+        super().__init__(**kwargs)
+        self.calc_bar = calc_bar
